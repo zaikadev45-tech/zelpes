@@ -65,8 +65,3 @@ pub fn brain_file(files: Vec<String>, config: &ConfigZelpes) {
         println!("[+]={} movido", file_name);
     }
 }
-
-//excluir dentro de diretório
-pub fn brain_tmp_deleter() -> Result<()> {
-    
-}
