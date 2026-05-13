@@ -1,10 +1,10 @@
-use std::path::{PathBuf, Path};
 use std::fs;
+use std::path::PathBuf;
 
-use crate::ConfigZelpes;
 use crate::brain::logger;
+use crate::ConfigZelpes;
 
-pub enum FileManager{
+pub enum FileManager {
     LocalCofre,
     LocalBackup,
     LocalLogs,
@@ -52,16 +52,13 @@ impl FileManager {
 pub fn brain_file(files: Vec<String>, config: &ConfigZelpes) {
     for file_name in files {
         let arquivo = PathBuf::from(&file_name);
-        
-        let ext = arquivo
-            .extension()
-            .and_then(|e| e.to_str())
-            .unwrap_or("");
-        
+
+        let ext = arquivo.extension().and_then(|e| e.to_str()).unwrap_or("");
+
         let local = FileManager::locais(ext);
-        
+
         local.mover(config, &arquivo);
-        
+
         println!("[+]={} movido", file_name);
     }
 }

@@ -1,6 +1,6 @@
-use std::{fs, env, thread};
-use std::time::Duration;
 use std::path::PathBuf;
+use std::time::Duration;
+use std::{env, fs, thread};
 
 pub struct ConfigZelpes {
     zelpes_dir: PathBuf,
@@ -16,7 +16,7 @@ pub mod brain;
 
 fn main() {
     println!("[#] zelpes inicializado...");
-    
+
     let ext_s = ["txt", "kdbx"];
     let zelpes = ConfigZelpes::new();
 
@@ -28,15 +28,12 @@ fn main() {
     let _bot_zelpes = thread::spawn(move || loop {
         if !zelpes.cofre.exists() {
             panic!("[!!] Pasta Cofre sumiu!");
-        }
-        else if !zelpes.backup.exists() {
+        } else if !zelpes.backup.exists() {
             println!("[!!!] Pasta backup sumiu!");
             panic!("faça verificação manual na pasta .zelpes");
-         }
-        else if !zelpes.logs.exists() {
+        } else if !zelpes.logs.exists() {
             panic!("[aviso][!] Pasta logs sumiu");
-        }
-        else if !zelpes.tmp.exists() {
+        } else if !zelpes.tmp.exists() {
             panic!("[!!] pasta tmp sumiu!");
         }
 
@@ -46,7 +43,11 @@ fn main() {
             brain::brain_file(lista, &zelpes);
         }
 
-        thread::sleep(Duration::from_secs(5));
+        thread::sleep(Duration::from_secs(10));
+        if brain::arquivo_ext(&zelpes.tmp, "txt") {
+            let lista = brain::back_names(&zelpes.tmp, "txt");
+            clear_tmp(&zelpes.tmp, lista);
+        }
     });
 
     println!("[+] zalpes iniciado! aperte Ctrl+C para sair\n");
@@ -55,9 +56,18 @@ fn main() {
     }
 }
 
+fn clear_tmp(dir_tmp: &PathBuf, list: Vec<String>) {
+    for file_name in list {
+        let arquivo = dir_tmp.join(&file_name);
+        fs::remove_file(&arquivo)
+            .expect("[ERRO] ao deletar arquivo");
+        brain::logger::registrar("foi deletado", &file_name);
+    }
+}
+
 impl ConfigZelpes {
     fn new() -> Self {
-        let base  = env::current_dir().unwrap();
+        let base = env::current_dir().unwrap();
         let zelpes = base.join(".zelpes");
 
         ConfigZelpes {
@@ -68,18 +78,14 @@ impl ConfigZelpes {
 
             dir: base,
             zelpes_dir: zelpes,
-
         }
     }
 
     fn init_zelpes(&self) {
         let pastas = [&self.cofre, &self.backup, &self.logs, &self.tmp];
-        let zelpes_dir = &self.zelpes_dir;
         for &parte in &pastas {
-            let criar = zelpes_dir.join(parte);
-            fs::create_dir_all(criar)
+            fs::create_dir_all(parte)
                 .expect("[ERRO] na criação do {parte}");
         }
     }
 }
-

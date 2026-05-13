@@ -1,5 +1,5 @@
 pub mod extensions;
-pub use extensions::{back_names, arquivo_ext};
+pub use extensions::{arquivo_ext, back_names};
 
 pub mod file_manager;
 pub use file_manager::brain_file;

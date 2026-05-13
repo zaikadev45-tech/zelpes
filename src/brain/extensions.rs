@@ -7,7 +7,9 @@ pub fn back_names(pasta: &Path, extensao: &str) -> Vec<String> {
         entries
             .flatten()
             .filter(|entry| {
-                entry.path().extension()
+                entry
+                    .path()
+                    .extension()
                     .map(|ext| ext.to_string_lossy().to_lowercase() == extensao.to_lowercase())
                     .unwrap_or(false)
             })
@@ -22,7 +24,9 @@ pub fn back_names(pasta: &Path, extensao: &str) -> Vec<String> {
 pub fn arquivo_ext(pasta: &Path, extensao: &str) -> bool {
     if let Ok(entries) = fs::read_dir(pasta) {
         entries.flatten().any(|entry| {
-            entry.path().extension()
+            entry
+                .path()
+                .extension()
                 .map(|ext| ext.to_string_lossy().to_lowercase() == extensao.to_lowercase())
                 .unwrap_or(false)
         })

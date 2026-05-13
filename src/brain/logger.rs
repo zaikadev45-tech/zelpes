@@ -12,6 +12,5 @@ pub fn registrar(texto: &str, file: &str) {
         .create(true)
         .open(&logger)
         .expect("[ERRO] ao abrir/criar arquivo");
-    writeln!(arquivo, "[LOG]=FILE: {file} / {texto}")
-        .expect("[ERRO] erro ao registrar no arquivo");
+    writeln!(arquivo, "[LOG]=FILE: {file} / {texto}").expect("[ERRO] erro ao registrar no arquivo");
 }
