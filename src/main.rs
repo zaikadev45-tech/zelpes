@@ -1,4 +1,4 @@
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 use std::time::Duration;
 use std::{env, fs, thread};
 
@@ -17,7 +17,7 @@ pub mod brain;
 fn main() {
     println!("[#] zelpes inicializado...");
 
-    let ext_s = ["txt", "kdbx"];
+    let ext_s = ["txt", "kdbx", "zip", "tar", "log", "logs", "apk"];
     let zelpes = ConfigZelpes::new();
 
     if !zelpes.zelpes_dir.exists() {
@@ -46,7 +46,7 @@ fn main() {
         thread::sleep(Duration::from_secs(10));
         if brain::arquivo_ext(&zelpes.tmp, "txt") {
             let lista = brain::back_names(&zelpes.tmp, "txt");
-            clear_tmp(&zelpes.tmp, lista);
+            clear_tmp(&zelpes.logs, &zelpes.tmp, lista);
         }
     });
 
@@ -56,12 +56,11 @@ fn main() {
     }
 }
 
-fn clear_tmp(dir_tmp: &PathBuf, list: Vec<String>) {
+fn clear_tmp(dir_logs: &Path, dir_tmp: &Path, list: Vec<String>) {
     for file_name in list {
         let arquivo = dir_tmp.join(&file_name);
-        fs::remove_file(&arquivo)
-            .expect("[ERRO] ao deletar arquivo");
-        brain::logger::registrar("foi deletado", &file_name);
+        fs::remove_file(&arquivo).expect("[ERRO] ao deletar arquivo");
+        brain::logger::registrar(&dir_logs, "foi deletado", &file_name);
     }
 }
 
@@ -84,8 +83,7 @@ impl ConfigZelpes {
     fn init_zelpes(&self) {
         let pastas = [&self.cofre, &self.backup, &self.logs, &self.tmp];
         for &parte in &pastas {
-            fs::create_dir_all(parte)
-                .expect("[ERRO] na criação do {parte}");
+            fs::create_dir_all(parte).expect("[ERRO] na criação do {parte}");
         }
     }
 }

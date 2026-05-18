@@ -1,11 +1,9 @@
 use std::fs::OpenOptions;
 use std::io::Write;
+use std::path::Path;
 
-use crate::ConfigZelpes;
-
-pub fn registrar(texto: &str, file: &str) {
-    let struct_zelpes = ConfigZelpes::new();
-    let logger = struct_zelpes.logs.join("movement.log");
+pub fn registrar(logs_dir: &Path, texto: &str, file: &str) {
+    let logger = logs_dir.join("movement.log");
 
     let mut arquivo = OpenOptions::new()
         .append(true)
