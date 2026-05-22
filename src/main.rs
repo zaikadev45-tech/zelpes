@@ -39,15 +39,15 @@ fn main() {
 
         //# gerenciar arquivo
         for ext in ext_s {
-            let lista = brain::back_names(&zelpes.dir, ext);
-            brain::brain_file(lista, &zelpes);
-        }
+            let lista = brain::back_names(&zelpes.dir, &ext);
+            brain::brain_file(&lista, &zelpes);
 
-        thread::sleep(Duration::from_secs(10));
-        if brain::arquivo_ext(&zelpes.tmp, "txt") {
-            let lista = brain::back_names(&zelpes.tmp, "txt");
-            clear_tmp(&zelpes.logs, &zelpes.tmp, lista);
+            if brain::arquivo_ext(&zelpes.tmp, ext) {
+                let list_delet = brain::back_names(&zelpes.tmp, &ext);
+                clear_tmp(&zelpes.logs, &list_delet);
+            }
         }
+        thread::sleep(Duration::from_secs(5));
     });
 
     println!("[+] zalpes iniciado! aperte Ctrl+C para sair\n");
@@ -56,9 +56,9 @@ fn main() {
     }
 }
 
-fn clear_tmp(dir_logs: &Path, dir_tmp: &Path, list: Vec<String>) {
+fn clear_tmp(dir_logs: &Path, list: &Vec<String>) {
     for file_name in list {
-        let arquivo = dir_tmp.join(&file_name);
+        let arquivo = Path::new(file_name);
         fs::remove_file(&arquivo).expect("[ERRO] ao deletar arquivo");
         brain::logger::registrar(&dir_logs, "foi deletado", &file_name);
     }

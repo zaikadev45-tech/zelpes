@@ -48,12 +48,11 @@ impl FileManager {
     }
 }
 
-pub fn brain_file(files: Vec<String>, config: &ConfigZelpes) {
+pub fn brain_file(files: &Vec<String>, config: &ConfigZelpes) {
     for file_name in files {
-        let arquivo = config.dir.join(&file_name);
+        let arquivo = Path::new(&file_name);
 
         let ext = arquivo.extension().and_then(|e| e.to_str()).unwrap_or("");
-
         let local = FileManager::locais(ext);
 
         local.mover(config, &arquivo);

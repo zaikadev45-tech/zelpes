@@ -1,36 +1,31 @@
-use std::fs;
 use std::path::Path;
+use walkdir::WalkDir;
 
-//Pega nomes de pastas/arquivos no lugar
 pub fn back_names(pasta: &Path, extensao: &str) -> Vec<String> {
-    if let Ok(entries) = fs::read_dir(pasta) {
-        entries
-            .flatten()
-            .filter(|entry| {
-                entry
-                    .path()
-                    .extension()
-                    .map(|ext| ext.to_string_lossy().to_lowercase() == extensao.to_lowercase())
-                    .unwrap_or(false)
-            })
-            .map(|entry| entry.file_name().to_string_lossy().to_string())
-            .collect()
-    } else {
-        vec![]
-    }
-}
-
-//verificar si tem arquivo com ext em uma pasta
-pub fn arquivo_ext(pasta: &Path, extensao: &str) -> bool {
-    if let Ok(entries) = fs::read_dir(pasta) {
-        entries.flatten().any(|entry| {
-            entry
-                .path()
-                .extension()
+    WalkDir::new(pasta)
+        .into_iter()
+        .flatten()
+        .filter(|entry| {
+            // ignora a pasta .zelpes para evitar loop
+            !entry.path().starts_with(pasta.join(".zelpes"))
+        })
+        .filter(|entry| {
+            entry.path().extension()
                 .map(|ext| ext.to_string_lossy().to_lowercase() == extensao.to_lowercase())
                 .unwrap_or(false)
         })
-    } else {
-        false
-    }
+        .map(|entry| entry.path().to_string_lossy().to_string())
+        .collect()
+}
+
+pub fn arquivo_ext(pasta: &Path, extensao: &str) -> bool {
+    WalkDir::new(pasta)
+        .into_iter()
+        .flatten()
+        .filter(|entry| !entry.path().starts_with(pasta.join(".zelpes")))
+        .any(|entry| {
+            entry.path().extension()
+                .map(|ext| ext.to_string_lossy().to_lowercase() == extensao.to_lowercase())
+                .unwrap_or(false)
+        })
 }
