@@ -18,7 +18,7 @@ pub fn back_names(pasta: &Path, extensao: &str) -> Vec<String> {
         .collect()
 }
 
-pub fn arquivo_ext(pasta: &Path, extensao: &str) -> bool {
+pub fn arquivo_ext(pasta: &Path, extensao: &String) -> bool {
     WalkDir::new(pasta)
         .into_iter()
         .flatten()

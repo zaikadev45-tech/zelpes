@@ -17,7 +17,7 @@ impl FileManager {
             "kdbx" => FileManager::LocalCofre,
             "zip" | "tar" => FileManager::LocalBackup,
             "txt" | "apk" | "log" | "logs" => FileManager::LocalTmp,
-            _ => panic!("ERRO na etx do arquivo"),
+            _ => FileManager::LocalTmp,
         }
     }
 

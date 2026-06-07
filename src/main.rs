@@ -17,12 +17,12 @@ pub mod brain;
 fn main() {
     println!("[#] zelpes inicializado...");
 
-    let ext_s = ["txt", "kdbx", "zip", "tar", "log", "logs", "apk"];
     let zelpes = ConfigZelpes::new();
 
     if !zelpes.zelpes_dir.exists() {
         ConfigZelpes::init_zelpes(&zelpes);
     }
+    let ext_s = brain::config(&zelpes.zelpes_dir);
 
     // sistema do zelpes
     let _bot_zelpes = thread::spawn(move || loop {
@@ -38,11 +38,11 @@ fn main() {
         }
 
         //# gerenciar arquivo
-        for ext in ext_s {
+        for ext in &ext_s {
             let lista = brain::back_names(&zelpes.dir, &ext);
             brain::brain_file(&lista, &zelpes);
 
-            if brain::arquivo_ext(&zelpes.tmp, ext) {
+            if brain::arquivo_ext(&zelpes.tmp, &ext) {
                 let list_delet = brain::back_names(&zelpes.tmp, &ext);
                 clear_tmp(&zelpes.logs, &list_delet);
             }

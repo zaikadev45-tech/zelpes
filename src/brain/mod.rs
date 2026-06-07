@@ -6,3 +6,6 @@ pub use file_manager::brain_file;
 
 pub mod logger;
 pub use logger::registrar;
+
+pub mod configs;
+pub use configs::config;
