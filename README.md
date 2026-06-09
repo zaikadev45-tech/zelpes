@@ -1,19 +1,20 @@
 ![zelpes](https://raw.githubusercontent.com/zaikadev45-tech/zelpes/test/benner.png)
 
-# zelpes
+##
+### zelpes
 zelpes é um bot que cuida do diretório que foi executado
 
 ##
 ### Como usar:
 *mexer no sdcard do celular?*
-cd /sdcard
-~/zelpes
+- cd /sdcard
+- ~/zelpes
 
 *mexer só na pasta projetos?*
-cd exemplo_projeto
-~/zelpes
+- cd exemplo_projeto
+- ~/zelpes
 
-`` só é preciso executar o binário dentro da pasta aonde quer deixar o bot mexendo``
+`` só é preciso executar o binário dentro da pasta aonde quer deixar o bot mexendo, e ele precisa de permissão pra mover/deletar no diretório``
 
 
 
