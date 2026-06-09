@@ -1,4 +1,4 @@
-![zelpes](https://raw.githubusercontent.com/zaikadev45-tech/zelpes/test/benner.png)
+![zelpes](https://raw.githubusercontent.com/zaikadev45-tech/zelpes/main/benner.png)
 
 ##
 ### zelpes
