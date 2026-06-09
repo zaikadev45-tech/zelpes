@@ -19,13 +19,14 @@ zelpes é um bot que cuida do diretório que foi executado
 
 
 ##
-### O que ele faz
-- Monitora o diretório atual a cada 5s
-- Move arquivos por extensão:
-  - `.kdbx` → cofre/
-  - `.zip`, `.tar` → backup/
-  - `.txt`, `.apk`, `.log` → tmp/
+### O que ele faz:
+ele já tem configurações padrões como:
+- `.txt / .log ` vai pra pasta .zelpes/tmp e depois é deletado,
+- `kdbx` vai pro .zelpes/cofre
+- Extensões que eu não configurei vai pro /tmp então **CUIDADO** ainda vou ajustar o bot pra decidir qual ação tomar conforme o arquivo config.zik
+
 - Extensões configuráveis em `.zelpes/config.zik`
+coloque só o nome da extensão 
 
 ##
 ### Instalação
