@@ -3,11 +3,22 @@
 # zelpes
 zelpes é um bot que cuida do diretório que foi executado
 
-## Como usar
-cd /pasta/que/quer/monitorar
-zelpes
+##
+### Como usar:
+*mexer no sdcard do celular?*
+cd /sdcard
+~/zelpes
 
-## O que ele faz
+*mexer só na pasta projetos?*
+cd exemplo_projeto
+~/zelpes
+
+`` só é preciso executar o binário dentro da pasta aonde quer deixar o bot mexendo``
+
+
+
+##
+### O que ele faz
 - Monitora o diretório atual a cada 5s
 - Move arquivos por extensão:
   - `.kdbx` → cofre/
@@ -15,9 +26,11 @@ zelpes
   - `.txt`, `.apk`, `.log` → tmp/
 - Extensões configuráveis em `.zelpes/config.zik`
 
-## Instalação
+##
+### Instalação
 cargo build --release
 
-## Dependências
+##
+### Dependências
 - walkdir
  
